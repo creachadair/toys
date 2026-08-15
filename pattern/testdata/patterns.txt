@@ -1,0 +1,195 @@
+NN:
+  -> e
+  <- e, ee
+
+KN:
+  -> s
+  ...
+  -> e
+  <- e, ee, se
+
+NK:
+  <- s
+  ...
+  -> e, es
+  <- e, ee
+
+NKbob:
+  -> s
+  ...
+  <- e, se
+  -> e, ee
+
+NX:
+  -> e
+  <- e, ee, s, es
+
+XN:
+  -> e
+  <- e, ee
+  -> s, se
+
+IN:
+  -> e, s
+  <- e, ee, se
+
+XK:
+  <- s
+  ...
+  -> e, es
+  <- e, ee
+  -> s, se
+
+IK:
+  <- s
+  ...
+  -> e, es, s, ss
+  <- e, ee, se
+
+XX:
+  -> e
+  <- e, ee, s, es
+  -> s, se
+
+XXfallback:
+  -> e
+  ...
+  <- e, ee, s, es
+  -> s, se
+
+IX:
+  -> e, s
+  <- e, ee, se, s, es
+
+NK1:
+  <- s
+  ...
+  -> e
+  <- e, ee, es
+
+X1X:
+  -> e
+  <- e, ee, s, es
+  -> s
+  <- se
+
+XX1:
+  -> e
+  <- e, ee, s
+  -> es, s, se
+
+X1X1:
+  -> e
+  <- e, ee, s
+  -> es, s
+  <- se
+
+NNpsk0:
+  -> psk, e
+  <- e, ee
+
+NNpsk2:
+  -> e
+  <- e, ee, psk
+
+NKpsk0:
+  <- s
+  ...
+  -> psk, e, es
+  <- e, ee
+
+NKpsk2:
+  <- s
+  ...
+  -> e, es
+  <- e, ee, psk
+
+NXpsk2:
+  -> e
+  <- e, ee, s, es, psk
+
+ XNpsk3:
+   -> e
+   <- e, ee
+   -> s, se, psk
+
+XKpsk3:
+  <- s
+  ...
+  -> e, es
+  <- e, ee
+  -> s, se, psk
+
+XXpsk3:
+  -> e
+  <- e, ee, s, es
+  -> s, se, psk
+
+KNpsk0:
+  -> s
+  ...
+  -> psk, e
+  <- e, ee, se
+
+KNpsk2:
+  -> s
+  ...
+  -> e
+  <- e, ee, se, psk
+
+KK:
+  -> s
+  <- s
+  ...
+  -> e, es, ss
+  <- e, ee, se
+
+KKpsk0:
+  -> s
+  <- s
+  ...
+  -> psk, e, es, ss
+  <- e, ee, se
+
+KKpsk2:
+  -> s
+  <- s
+  ...
+  -> e, es, ss
+  <- e, ee, se, psk
+
+KX:
+  -> s
+  ...
+  -> e
+  <- e, ee, se, s, es
+
+KXpsk2:
+  -> s
+  ...
+  -> e
+  <- e, ee, se, s, es, psk
+
+INpsk1:
+  -> e, s, psk
+  <- e, ee, se
+
+INpsk2:
+  -> e, s
+  <- e, ee, se, psk
+
+IKpsk1:
+  <- s
+  ...
+  -> e, es, s, ss, psk
+  <- e, ee, se
+
+IKpsk2:
+  <- s
+  ...
+  -> e, es, s, ss
+  <- e, ee, se, psk
+
+IXpsk2:
+  -> e, s
+  <- e, ee, se, s, es, psk
