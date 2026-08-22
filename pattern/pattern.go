@@ -71,11 +71,8 @@ func (hc Config) Compile() (out Handshake, _ error) {
 	}
 
 	for i, pat := range hc.Messages {
-		// Each pattern must be non-empty, except the first in a responder-initiated pattern.
+		// Each pattern must be non-empty.
 		if len(pat) == 0 {
-			if i == 0 && hc.Initiator != toys.NoKeys {
-				continue // the initiator sent something in the pre-message, so this could be OK
-			}
 			return out, fmt.Errorf("rule %d: empty pattern", i+1)
 		}
 		who := i % 2
@@ -371,17 +368,12 @@ func Parse(s string) (out Config, _ error) {
 	for _, in := range insns {
 		switch in.who {
 		case "->":
-			cfg.Messages = append(cfg.Messages, in.what)
+			cfg.Messages = append(cfg.Messages, translate(in.what))
 		case "<-":
-			// If this is the first message in the handshake, this could be a
-			// Bob-initiated flow (see 7.2).
-			// For that to be possible, the initiator must have sent a non-empty
-			// pre-message, in which case we can invert all the rules to
-			// canonicalize so the initiator is on the "left".
+			// If this is the first message in the handshake, this is a
+			// Bob-initiated flow (see 7.2). In that case, we can invert all
+			// the rules to canonicalize so the initiator is Alice, on the left.
 			if len(cfg.Messages) == 0 {
-				if cfg.Initiator == toys.NoKeys {
-					return out, fmt.Errorf("line %d: Bob-initiated instruction with no pre-message", ln)
-				}
 				cfg.Initiator, cfg.Responder = cfg.Responder, cfg.Initiator
 				translate = invert
 			}

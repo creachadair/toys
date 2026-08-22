@@ -33,6 +33,10 @@ IN:
   -> e, s
   <- e, ee, se
 
+INbob:
+  <- e, s
+  -> e, ee, es
+
 XK:
   <- s
   ...
