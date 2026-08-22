@@ -69,12 +69,14 @@ func TestShakeHands(t *testing.T) {
 					Messages: []toys.Message{{"e"}, {"e", "ee"}},
 				})
 				ic := state.HandshakeConfig{
-					Noise:   tc.config,
-					Pattern: nn,
+					Noise:    tc.config,
+					Prologue: []byte("abc"),
+					Pattern:  nn,
 				}
 
 				rc := state.HandshakeConfig{
 					Noise:     tc.config,
+					Prologue:  []byte("abc"),
 					Pattern:   nn,
 					Responder: true,
 				}
