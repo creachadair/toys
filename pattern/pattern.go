@@ -3,7 +3,7 @@
 // # Overview
 //
 // Construct a [Handshake] value either by parsing a textual description of the
-// handshake pattern (via [Compile]; otherwise, construct a [Config] or parse
+// handshake pattern (via [Compile]); otherwise, construct a [Config] or parse
 // one using [Parse], and call [Config.Compile].
 //
 // The compiled handshake pattern can then be used to instantiate a Noise
