@@ -40,7 +40,7 @@ func TestConfigBasic(t *testing.T) {
 }
 
 func TestShakeHands(t *testing.T) {
-	cryptotest.SetGlobalRandom(t, 20260821160929)
+	cryptotest.SetGlobalRandom(t, 20260821214729)
 
 	ds := []toys.DH{dhs.ECDH25519}
 	cs := []toys.Cipher{ciphers.ChaCha20Poly1305, ciphers.AESGCM}
@@ -68,16 +68,29 @@ func TestShakeHands(t *testing.T) {
 					Label:    "NN",
 					Messages: []toys.Message{{"e"}, {"e", "ee"}},
 				})
-				init := htest.NewHandshake(t, state.HandshakeConfig{
+				ic := state.HandshakeConfig{
 					Noise:   tc.config,
 					Pattern: nn,
-				})
-				resp := htest.NewHandshake(t, state.HandshakeConfig{
+				}
+
+				rc := state.HandshakeConfig{
 					Noise:     tc.config,
 					Pattern:   nn,
 					Responder: true,
+				}
+
+				// Run the handshake twice from the same configs, to verify that
+				// the config inputs are reusable.
+				t.Run("1", func(t *testing.T) {
+					init := htest.NewHandshake(t, ic)
+					resp := htest.NewHandshake(t, rc)
+					htest.RunHandshake(t, init, resp)
 				})
-				htest.RunHandshake(t, init, resp)
+				t.Run("2", func(t *testing.T) {
+					init := htest.NewHandshake(t, ic)
+					resp := htest.NewHandshake(t, rc)
+					htest.RunHandshake(t, init, resp)
+				})
 			})
 			t.Run("NK", func(t *testing.T) {
 				nk := htest.MustCompileText(t, nkPattern)
