@@ -290,9 +290,8 @@ func (h *Handshake) init() *Handshake {
 	return h
 }
 
-// WriteMessage processes the next message pattern of h into w, including
-// payload if it is non-empty. If it successfully completes the pattern, the
-// error is nil.
+// WriteMessage processes the next message pattern of h into w, and then if
+// payload is non-empty, encrypts (if possible) and writes it to w also.
 func (h *Handshake) WriteMessage(w io.Writer, payload []byte) error {
 	row := h.pattern.Pattern(h.pc)
 	h.pc++
@@ -391,9 +390,8 @@ func (h *Handshake) WriteMessage(w io.Writer, payload []byte) error {
 	return nil
 }
 
-// ReadMessage processes the next message pattern of h into w, using message as
-// the input, and writes the decrypted payload (if any) to w.
-// If it successfully completes the pattern, the error is nil.
+// ReadMessage processes message as the input to the next message pattern of h,
+// and writes the decrypted payload (if any) to w.
 func (h *Handshake) ReadMessage(w io.Writer, message []byte) error {
 	row := h.pattern.Pattern(h.pc)
 	h.pc++
