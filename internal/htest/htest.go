@@ -74,17 +74,14 @@ func RunHandshake(t *testing.T, initiator, responder *state.Handshake) (ia, ib, 
 		if initiator.IsWriteStep() {
 			// Write step: Initiator writes, responder reads.
 			var msg bytes.Buffer
-			var err error
-			ia, ib, err = initiator.WriteMessage(&msg, []byte(payload))
-			if err != nil {
+			if err := initiator.WriteMessage(&msg, []byte(payload)); err != nil {
 				t.Fatalf("[initiator] write: %v", err)
 			}
 			t.Logf("[initiator] send data: %x", msg.Bytes())
 
 			t.Logf("[responder] recv data: %x", msg.Bytes())
 			var out bytes.Buffer
-			ra, rb, err = responder.ReadMessage(&out, msg.Bytes())
-			if err != nil {
+			if err := responder.ReadMessage(&out, msg.Bytes()); err != nil {
 				t.Fatalf("[responder] read: %v", err)
 			}
 
@@ -95,17 +92,14 @@ func RunHandshake(t *testing.T, initiator, responder *state.Handshake) (ia, ib, 
 		} else {
 			// Read step: Responder writes, initiator reads.
 			var msg bytes.Buffer
-			var err error
-			ra, rb, err = responder.WriteMessage(&msg, []byte(payload))
-			if err != nil {
+			if err := responder.WriteMessage(&msg, []byte(payload)); err != nil {
 				t.Fatalf("[responder] write: %v", err)
 			}
 			t.Logf("[responder] send data: %x", msg.Bytes())
 
 			t.Logf("[initiator] recv data: %x", msg.Bytes())
 			var out bytes.Buffer
-			ia, ib, err = initiator.ReadMessage(&out, msg.Bytes())
-			if err != nil {
+			if err := initiator.ReadMessage(&out, msg.Bytes()); err != nil {
 				t.Fatalf("[initiator] read: %v", err)
 			}
 
@@ -121,6 +115,8 @@ func RunHandshake(t *testing.T, initiator, responder *state.Handshake) (ia, ib, 
 	}
 
 	// Reaching here without error, we should have two pairs of cipher keys.
+	ia, ib = initiator.TransportKeys()
+	ra, rb = responder.TransportKeys()
 	if ia == nil || ib == nil || ra == nil || rb == nil {
 		t.Fatalf("After handshake: ia=%v ib=%v ra=%v rb=%v", ia, ib, ra, rb)
 	}
