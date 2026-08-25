@@ -63,6 +63,12 @@ func RunHandshake(t *testing.T, initiator, responder *state.Handshake) (ia, ib, 
 	// We simulate the "connection" by plumbing the output buffer from the
 	// writer directly to the input of the reader, for each side.
 	for i := 1; initiator.More(); i++ {
+		if ia, ib := initiator.TransportKeys(); ia != nil || ib != nil {
+			t.Errorf("Initiator has transport keys before handshake is complete: a=%v b=%v", ia, ib)
+		}
+		if ra, rb := responder.TransportKeys(); ra != nil || rb != nil {
+			t.Errorf("Responder has transport keys before handshake is complete: a=%v b=%v", ra, rb)
+		}
 		t.Logf("-- begin step %d --", i)
 
 		// Sanity check: Handshake parity should alternate.
