@@ -298,7 +298,7 @@ func Compile(s string) (Handshake, error) {
 //	pre-message = 'e' | 's' | 'e' ',' 's'
 //	exch        = dir messages <EOL> [exch]
 //	messages    = message [',' messages]
-//	message     = 'e' | 's' | 'ee' | 'es' | 'se' | 'ss'
+//	message     = 'e' | 's' | 'ee' | 'es' | 'se' | 'ss' | 'psk'
 //	<word>      = [A-Z][A-Za-z0-9]*
 //	<EOL>       = [\n]
 func Parse(s string) (out Config, _ error) {
