@@ -153,6 +153,16 @@ func (p ProtocolName) Bytes() []byte {
 
 // ParseProtocolName parses the string representation of a Noise [protocol name].
 //
+// Grammar:
+//
+//	proto     = 'Noise_' handshake '_' dh '_' cipher '_' hash
+//	handshake = <hword>
+//	dh        = <aword>
+//	cipher    = <aword>
+//	hash      = <aword>
+//	<hword>   = [A-Z][+A-Za-z0-9]*
+//	<aword>   = [A-Za-z0-9/]+(\+[A-Za-z0-9/]+)*
+//
 // [protocol name]: https://noiseprotocol.org/noise.html#protocol-names-and-modifiers
 func ParseProtocolName(s string) (ProtocolName, error) {
 	parts := strings.SplitN(s, "_", 5)

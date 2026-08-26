@@ -299,7 +299,7 @@ func Compile(s string) (Handshake, error) {
 //	exch        = dir messages <EOL> [exch]
 //	messages    = message [',' messages]
 //	message     = 'e' | 's' | 'ee' | 'es' | 'se' | 'ss' | 'psk'
-//	<word>      = [A-Z][A-Za-z0-9]*
+//	<word>      = [A-Z][+A-Za-z0-9]*
 //	<EOL>       = [\n]
 func Parse(s string) (out Config, _ error) {
 	type insn struct {
