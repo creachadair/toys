@@ -192,6 +192,12 @@ func TestProtocolName(t *testing.T) {
 		{"Noise_IK_25519_ChaChaPoly_BLAKE2s", toys.ProtocolName{
 			Handshake: "IK", DH: "25519", Cipher: "ChaChaPoly", Hash: "BLAKE2s",
 		}},
+		{"Noise_XXpsk0+foo_Apple+Pear/Plum_12345/X+67_QQ/1+RR/2", toys.ProtocolName{
+			Handshake: "XXpsk0+foo",
+			DH:        "Apple+Pear/Plum",
+			Cipher:    "12345/X+67",
+			Hash:      "QQ/1+RR/2",
+		}},
 	}
 	for _, tc := range tests {
 		got, err := toys.ParseProtocolName(tc.input)

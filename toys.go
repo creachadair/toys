@@ -172,12 +172,12 @@ func ParseProtocolName(s string) (ProtocolName, error) {
 		return ProtocolName{}, errors.New("missing Noise prefix")
 	} else if _, _, err := parse.PatternName(parts[1]); err != nil {
 		return ProtocolName{}, fmt.Errorf("handshake name: %w", err)
-	} else if parts[2] == "" {
-		return ProtocolName{}, errors.New("empty DH name")
-	} else if parts[3] == "" {
-		return ProtocolName{}, errors.New("empty cipher name")
-	} else if parts[4] == "" {
-		return ProtocolName{}, errors.New("empty hash name")
+	} else if _, err := parse.Algorithm(parts[2]); err != nil {
+		return ProtocolName{}, fmt.Errorf("DH name: %w", err)
+	} else if _, err := parse.Algorithm(parts[3]); err != nil {
+		return ProtocolName{}, fmt.Errorf("cipher name: %w", err)
+	} else if _, err := parse.Algorithm(parts[4]); err != nil {
+		return ProtocolName{}, fmt.Errorf("hash name: %w", err)
 	}
 	return ProtocolName{
 		Handshake: parts[1], DH: parts[2], Cipher: parts[3], Hash: parts[4],

@@ -35,3 +35,21 @@ func PatternName(s string) (name string, mods []string, _ error) {
 	}
 	return s[:end], mods, nil
 }
+
+// Algorithm parses and validates a hash, cipher, or DH name according to the
+// rules of [8.2] "Cryptographic algorithm name sections".
+//
+// [8.2]: https://noiseprotocol.org/noise.html#handshake-pattern-name-section
+func Algorithm(s string) (parts []string, _ error) {
+	for p := range strings.SplitSeq(s, "+") {
+		if p == "" {
+			return parts, errors.New("empty component")
+		} else if strings.ContainsFunc(p, func(r rune) bool {
+			return !isLower(r) && !isUpper(r) && !isDigit(r) && r != '/'
+		}) {
+			return parts, fmt.Errorf("invalid character in %q", p)
+		}
+		parts = append(parts, p)
+	}
+	return parts, nil
+}
