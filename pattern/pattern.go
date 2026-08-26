@@ -287,6 +287,20 @@ func Compile(s string) (Handshake, error) {
 // Parse parses s as the text encoding of a Noise handshake pattern.  On
 // success, it returns a [Config]. The resulting config is grammatical, but may
 // not be valid; call its Compile method to check.
+//
+// Grammar:
+//
+//	pattern     = name [pre] exch
+//	name        = <word> ":" <EOL>
+//	pre         = pre-exch <EOL> '...' <EOL>
+//	pre-exch    = dir pre-message <EOL> [pre-exch]
+//	dir         = '->' | '<-'
+//	pre-message = 'e' | 's' | 'e' ',' 's'
+//	exch        = dir messages <EOL> [exch]
+//	messages    = message [',' messages]
+//	message     = 'e' | 's' | 'ee' | 'es' | 'se' | 'ss'
+//	<word>      = [A-Z][A-Za-z0-9]*
+//	<EOL>       = [\n]
 func Parse(s string) (out Config, _ error) {
 	type insn struct {
 		who  string
